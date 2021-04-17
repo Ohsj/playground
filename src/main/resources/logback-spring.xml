@@ -17,6 +17,7 @@
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_HOME}server.log</file>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <charset>UTF-8</charset>
             <pattern>%-5level %d{HH:mm:ss.SSS}[%thread] [%logger:%line] - %m%n</pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -32,6 +33,7 @@
         </filter>
         <file>${LOG_HOME}error.log</file>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <charset>UTF-8</charset>
             <pattern>%-5level %d{HH:mm:ss.SSS}[%thread] [%logger:%line] - %m%n</pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -44,8 +46,8 @@
     <springProfile name="local">
         <root level="DEBUG">
             <appender-ref ref="CONSOLE"/>
-            <appender-ref ref="FILE"/>
-            <appender-ref ref="ERROR_FILE"/>
+<!--            <appender-ref ref="FILE"/>-->
+<!--            <appender-ref ref="ERROR_FILE"/>-->
         </root>
     </springProfile>
 
