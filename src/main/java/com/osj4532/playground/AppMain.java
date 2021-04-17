@@ -19,7 +19,10 @@ public class AppMain {
     private static final Logger logger = (Logger) LoggerFactory.getLogger(AppMain.class);
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext app = SpringApplication.run(AppMain.class, args);
+        SpringApplication springApp = new SpringApplication(AppMain.class);
+        springApp.setBannerMode(Banner.Mode.OFF);
+
+        ConfigurableApplicationContext app = springApp.run(args);
         Environment env = app.getEnvironment();
         List<String> beans = Arrays.stream(app.getBeanDefinitionNames()).collect(Collectors.toList());
         String activeProfiles = String.join(", ", env.getActiveProfiles());
