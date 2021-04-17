@@ -1,4 +1,8 @@
-HELP.md
+### Server Log Dir ###
+log/*
+
+
+
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
