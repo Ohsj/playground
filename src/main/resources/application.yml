@@ -4,3 +4,22 @@ server:
 spring:
   profiles:
     active: local
+
+springdoc:
+  api-docs:
+    # Api docs 커스텀 경로
+    path: /api-docs
+  swagger-ui:
+    # swagger-ui 커스텀 경로
+    path: /swagger
+    # tag 정렬 기준 (alpha: 알파벳 오름차순)
+    tags-sorter: alpha
+    # 컨트롤러 내에서 정의한 api 메서드 순서 (method: http method 순서)
+    operations-sorter: method
+    # swagger-ui default url인 petstore html 문서 비활성화 여부
+    # ※ v1.4.1 이상 버전부터 지원
+    disable-swagger-default-url: true
+    # json화 된 config파일 대신 파라미터를 이용하여 swagger-ui에 접근
+    # api-docs(/api-docs) 및 swagger-ui.configUrl(/api-docs/swagger-config)를 두번씩 호출하는 것을 방지
+    # v1.4.1 이상 버전부터 지원
+    display-query-params-without-oauth2: true
