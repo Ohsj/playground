@@ -4,6 +4,7 @@
 <configuration scan="true" scanPeriod="60 seconds">
 
     <property name="LOG_HOME" value="./log/"/>
+    <property name="LOG_LEVEL" value="DEBUG"/>
 
     <!-- Console Appender -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
@@ -23,6 +24,34 @@
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- %i는 롤링 순번이며 최저 최고 순번 지정 가능 -->
             <fileNamePattern>${LOG_HOME}server.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!--  Rolling File Appender  -->
+    <appender name="ROLLING_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}rolling.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <charset>UTF-8</charset>
+            <pattern>%-5level %d{HH:mm:ss.SSS}[%thread] [%logger:%line] - %m%n</pattern>
+        </encoder>
+
+        <!-- 10MB가 넘어가면 새로운 압축파일 생성 -->
+        <triggeringPolicy
+            class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>10MB</MaxFileSize>
+        </triggeringPolicy>
+
+        <!-- 파일 덮어쓰는 정책 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <!-- %i는 롤링 순번이며 최저 최고 순번 지정 가능 -->
+            <FileNamePattern>${LOG_HOME}rolling.%i.log.zip</FileNamePattern>
+            <!--
+                10MB 단위로 로그 압축 파일이 생성된다. (1 ~ 10)
+                10개가 넘어가면 오래된 순으로 덮어쓰기 된다.
+            -->
+            <MinIndex>1</MinIndex>
+            <MaxIndex>10</MaxIndex>
         </rollingPolicy>
     </appender>
 
@@ -30,6 +59,8 @@
     <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>error</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
         </filter>
         <file>${LOG_HOME}error.log</file>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
@@ -37,18 +68,22 @@
             <pattern>%-5level %d{HH:mm:ss.SSS}[%thread] [%logger:%line] - %m%n</pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- %i는 롤링 순번이며 최저 최고 순번 지정 가능 -->
             <fileNamePattern>${LOG_HOME}error.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
         </rollingPolicy>
     </appender>
 
-    <!--  Root레벨 설정  -->
-    <springProfile name="local">
-        <root level="DEBUG">
-            <appender-ref ref="CONSOLE"/>
-<!--            <appender-ref ref="FILE"/>-->
-<!--            <appender-ref ref="ERROR_FILE"/>-->
-        </root>
-    </springProfile>
+    <!--  springframework.web 패키지 아래에서 발생하는 INFO 레벨 로그를 콘솔, 파일에 남긴다.  -->
+    <logger name="org.springframework.web" level="INFO" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="ERROR_FILE"/>
+    </logger>
 
+    <!--  Root레벨 설정  -->
+    <root level="${LOG_LEVEL}">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="ERROR_FILE"/>
+    </root>
 </configuration>

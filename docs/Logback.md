@@ -1,6 +1,6 @@
 # Logback
 
-2021.04.17 ~
+2021.04.17 ~ 2021.05.01
 
 ---
 ## Logback 이란?
@@ -36,3 +36,4 @@ Logback을 이용하여 로깅을 수행하기 위해 필요한 주요 설정 �
 ## ref
 - [LOGBACK이란? LOG4J의 후속작 로그백](https://dololak.tistory.com/632)
 - [갓대희의 작은공간](https://goddaehee.tistory.com/45)
+- [Logback 설정 방법](https://bamdule.tistory.com/29)
