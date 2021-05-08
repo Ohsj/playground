@@ -1,5 +1,6 @@
 package com.osj4532.playground.controller;
 
+import com.osj4532.playground.service.HomeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -17,6 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "HomeController", description = "PlayGround Home")
 public class HomeController extends BaseController{
 
+    private final HomeService service;
+
+    public HomeController(HomeService service) {
+        this.service = service;
+    }
+
     @GetMapping
     @Operation(summary = "This is PlayGround", description = "This is PlayGround")
     @ApiResponses(value = {
@@ -24,6 +31,7 @@ public class HomeController extends BaseController{
             @ApiResponse(responseCode = "500", description = "PlayGround is Fail")
     })
     public String playground() {
-        return "This is PlayGround";
+        logger.info("Base Controller logger");
+        return service.playground();
     }
 }
