@@ -85,6 +85,12 @@ Mock 객체를 만들고 관리하고 검증 할 수 있는 방법을 제공한�
   - @InjectMock: @Spy 또는 @Mock Annotation이 달린 spies/mocks fields를 자동으로 주입한다.
   - verify(): 주어진 argument로 메소드가 호출되었는지 확인한다. 가변적인 argument에 대한 매칭을 사용할 수 있다.
 
+### Mock vs MockBean
+@Mock은 가짜 객체를 만들겠다는 의미이고, @MockBean은 가짜 빈을 만들겠다는 의미이다.
+
+@WebMvcTest를 할 경우 service를 @Mock으로 만들면 Controller는 로드가 되지만 협력 객체인 service는 로드가 되지 않는다.
+그래서 contoller에 실제로 요청을 보내도 service가 bean container에 생성되어 있지 않기 때문에 ```java.lang.IllegalStateException: Failed to load ApplicationContext```이 발생한다. 
+
 ### ref
  - [TDD의 소개](https://velog.io/@velopert/TDD%EC%9D%98-%EC%86%8C%EA%B0%9C)
  - [TDD(Test-driven Development) 소개](https://m.blog.naver.com/suresofttech/221569611618)
