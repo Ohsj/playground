@@ -81,6 +81,7 @@
     </logger>
 
     <!--  Root레벨 설정  -->
+    <!--  Log Level에 따라 condition report 볼수 있음 (debug일 경우 o, info 이상 x)  -->
     <root level="${LOG_LEVEL}">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
