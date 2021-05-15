@@ -21,10 +21,11 @@ repositories {
 
 dependencies {
 //    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-//    runtimeOnly 'com.h2database:h2'
 
     // spring
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    // jdbc (hikari pool default use)
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
     // etc
     compileOnly 'org.projectlombok:lombok'
@@ -35,6 +36,10 @@ dependencies {
 
     // devtools
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // db
+    implementation 'org.postgresql:postgresql'
+    runtimeOnly 'com.h2database:h2'
 
     // test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

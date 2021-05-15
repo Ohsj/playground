@@ -10,7 +10,7 @@
 - Java 1.8.0.275
 - Spring Boot 2.4.5
 - Gradle 6.8.3
-- H2, Jpa
+- H2, Postgresql(docker), Jpa
 - Git
 
 ## Project Structure
@@ -28,8 +28,25 @@ src
      L resources
  L test
 ```
+## Postgresql이 아닌 H2 접근 시
+application.yml 파일에 ```spring.profiles.active``` 속성에 ```h2``` 추가
+
+## Postgresql에 접근 시
+
+application-000.yml(현재 프로젝트 기준 application-local.yml)을 생성하고 아래 설정을 추가해 준다.
+```
+spring.db.datasource.postgres.username=<자신의 Postgresql DB username>
+spring.db.datasource.postgres.password=<자신의 Postgresql DB user password>
+```
 
 ## Documentation
-- [Logback](./docs/Logback.md)
-- [OAS(OpenApi Specification)](docs/OAS.md)
-- [TDD](./docs/TDD.md)
+- DB
+    - [H2](./docs/db/H2.md)
+- Development
+    - [DevTools](./docs/springboot/DevTools.md)
+- Documentation
+    - [OAS(OpenApi Specification)](docs/OAS.md)
+- Log
+    - [Logback](./docs/Logback.md)
+- Test
+    - [TDD & Junit](./docs/TDD.md)

@@ -7,7 +7,24 @@ spring:
   devtools:
     livereload:
       enabled: true
-
+# H2 ===================================================================================================================
+  h2:
+    console:
+      enabled: true
+# DsB(Custom) ===========================================================================================================
+  db:
+    datasource:
+      # h2는 in-memory로 사용하기 때문에 외부에서 접근이 불가능하여 다른 yml파일을 따로 생성 안하고 그냥 표시
+      h2:
+        url: jdbc:h2:mem:playground
+        driver-class-name: org.h2.Driver
+        username: sa
+        password:
+      # 보안을 위해 username과 password는 다른 application-xxx.yml 생성 후 입력(git에 올리지 않음)
+      postgres:
+        url: jdbc:postgresql://localhost:5432/playground
+        driver-class-name: org.postgresql.Driver
+# Swagger ==============================================================================================================
 springdoc:
   api-docs:
     # Api docs 커스텀 경로
