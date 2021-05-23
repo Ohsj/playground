@@ -16,6 +16,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        default_schema: playground
     generate-ddl: false # DDL 생성 시 데이터베이스 고유의 기능을 사용하는지에 대한 유무
     open-in-view: false
 

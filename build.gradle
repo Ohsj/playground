@@ -23,8 +23,6 @@ dependencies {
 
     // spring
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    // jdbc (hikari pool default use)
-    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
     // etc
     compileOnly 'org.projectlombok:lombok'
@@ -39,6 +37,7 @@ dependencies {
     // db
     implementation 'org.postgresql:postgresql'
     implementation 'org.hibernate.validator:hibernate-validator:6.0.13.Final'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     runtimeOnly 'com.h2database:h2'
 

@@ -9,6 +9,7 @@ import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -22,10 +23,8 @@ import java.util.Objects;
  */
 
 @Configuration
-@EnableJpaRepositories(basePackages = {"com.osj4532.playground.domain.repo"},
-        entityManagerFactoryRef = "entityManagerFactory",
-        transactionManagerRef = "transactionManager"
-)
+@EnableJpaRepositories(basePackages = {"com.osj4532.playground.domain.repo"})
+@EnableJpaAuditing
 public class JpaConfig {
 
     private final Logger logger = (Logger)LoggerFactory.getLogger(this.getClass());

@@ -14,17 +14,19 @@
 - Git
 
 ## Project Structure
-2021-04-17 기준
+2021-05-23 기준
 ```
 src
  L main
      L java
         L com.osj4532.playground
+                L aop                           --- AOP 패키지
                 L config                        --- 설정 패키지
                 L controller                    --- 컨트롤러 패키지
                 L domain                        --- Entity 패키지
                 L dto                           --- DTO 패키지
                 L service                       --- 서비스 패키지
+                L utils                         --- 유틸 패키지
      L resources
  L test
 ```
