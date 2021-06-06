@@ -51,7 +51,7 @@ dependencies {
 
     // test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.mockito:mockito-core'
+    // MockitoExtension 을 사용하려면 추가해줘야한다.
     testImplementation 'org.mockito:mockito-junit-jupiter'
 }
 
