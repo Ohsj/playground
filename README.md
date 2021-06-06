@@ -14,7 +14,7 @@
 - Git
 
 ## Project Structure
-2021-05-23 기준
+2021-06-06 기준
 ```
 src
  L main
@@ -25,6 +25,7 @@ src
                 L controller                    --- 컨트롤러 패키지
                 L domain                        --- Entity 패키지
                 L dto                           --- DTO 패키지
+                L mapstruct                     --- ObjectMapper 패키지
                 L service                       --- 서비스 패키지
                 L utils                         --- 유틸 패키지
      L resources

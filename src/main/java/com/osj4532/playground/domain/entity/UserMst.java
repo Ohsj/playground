@@ -1,18 +1,18 @@
 package com.osj4532.playground.domain.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "user_mst")
+@NoArgsConstructor
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class UserMst extends CommonEntity{
+public class UserMst extends CommonEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id", length = 7)
