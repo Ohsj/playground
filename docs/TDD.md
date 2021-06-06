@@ -36,6 +36,23 @@ TDD를 하면 자연스레 ```테스트 커버리지가 높아질 수 밖에 없
 결국 ```프로젝트의 퀄리티를 높이기에 좋은 환경이 구성``` 되며 ```협업 시에도 많은 도움```이 된다.
 또한 ```버그에 낭비하는 시간도 최소```한으로 할 수 있고 ```구현 기능이 요구사항을 충족하는지 쉽게 확인``` 할 수 있다.
 
+### F.I.R.S.T
+1. Fast
+   - 단위 테스트는 가능한 빠르게 실행되어야 한다. 실행함에 있어 너무 느려 테스트 실행을 꺼리게 된다면 잘못된 단위테스트이다.
+   - ```@SpringBootTest```를 사용하면 해당 어플리케이션의 모든 빈을 IoC Container에 등록하고 테스트를 진행하기 때문에 테스트가 느려질 수 밖에 없다. 그래서 단위 테스트의 경우 ```Mockito```나 ```@DataJpaTest```를 사용해서 테스트 하는 것이 더 좋다.
+  
+2. Independent
+   - 단위테스트는 ```객체의 상태, 메소드, 이전 테스트 상태, 다른 메소드의 결과```등에 의존해서는 안된다. 따라서 단위테스트는 어떤 순서로 실행하더라도 성공해야 한다.
+  
+3. Repeatable
+   - 단위테스트는 반복 가능해야한다. DB에 의존하게 되는 현상과 같이 여러번 실행하는 경우 실패하면 안 된다.
+
+4. Self-validating
+   - 단위테스트는 자체검증이 가능해야한다. 테스트를 개발자가 직접 수동으로 확인할 필요 없이, ```Assert```문 등에 의해 성공 여부가 결과로 나타나야한다.
+  
+5. Timely
+   - 단위테스트를 통과하는 제품코드가 작성되기 바로전에 단위테스트를 작성해야한다. TDD를 하고 있다면 적용이 되지만 그렇지 않을 수도 있다.
+
 ### JUnit5
 Junit5는 전 버전과 다르게 서로 다른 3개의 서브 프로젝트의 여러 모듈로 구성된다.
 
@@ -97,3 +114,4 @@ Mock 객체를 만들고 관리하고 검증 할 수 있는 방법을 제공한�
  - [JUnit5 공식 문서](https://junit.org/junit5/docs/current/user-guide/)
  - [Mockito 공식 문서](https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html)
  - [Spring boot test, junit5, mockito 사용에 대한 정리](https://wan-blog.tistory.com/71)
+ - [Writing Your F.I.R.S.T Unit Tests](https://dzone.com/articles/writing-your-first-unit-tests)
