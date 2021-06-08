@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -37,7 +38,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         logger.info("AuthInterceptor Start");
         start = System.currentTimeMillis();         // 시간 측정 용
 
-        return isValidToken(req);
+        return checkRequestURI(req) || isValidToken(req);
     }
 
     @Override
@@ -68,5 +69,12 @@ public class AuthInterceptor implements HandlerInterceptor {
             isEmailMatch = user.getEmail().equals(String.valueOf(tokenData.get("email")));
         }
         return isNameMatch && isEmailMatch && isValidToken;
+    }
+
+    // 토큰 없이 통과 할수 있는 request uri 존재 시 추가하면 token 없이 통과 시키기
+    private boolean checkRequestURI(HttpServletRequest req) {
+        String reqUri = req.getRequestURI();
+        String[] openUri = {""};
+        return Arrays.asList(openUri).contains(reqUri);
     }
 }
