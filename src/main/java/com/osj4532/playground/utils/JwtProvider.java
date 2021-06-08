@@ -1,9 +1,10 @@
 package com.osj4532.playground.utils;
 
-import com.osj4532.playground.domain.entity.UserMst;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import ch.qos.logback.classic.Logger;
+import com.osj4532.playground.dto.UserMstDto;
+import io.jsonwebtoken.*;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +20,8 @@ import java.util.Map;
 
 @Component
 public class JwtProvider {
+
+    private final Logger logger = (Logger)LoggerFactory.getLogger(JwtProvider.class);
     // 토큰 기간 (하루)
     private final long TOKEN_VALID_PERIOD = 1000 * 60 * 60 * 24;
     // JWT 암호키
@@ -32,7 +35,7 @@ public class JwtProvider {
     }
 
     // JWT token 생성
-    public String createToken(UserMst user) {
+    public String createToken(UserMstDto user) {
 
         // JWT Header
         Map<String, Object> headers = new HashMap<>();
@@ -66,12 +69,23 @@ public class JwtProvider {
                 .getBody();
     }
 
-    // 토큰 만료 체크
-    public boolean isTokenExpired(String token) {
-        long now = new Date().getTime() / 1000; // millisecond remove
-        long exp = Long.parseLong(String.valueOf(getTokenData(token).get("exp")));
-        System.out.println(now +" , " + exp);
-
-        return now > exp;
+    // 토큰 유효성 체크
+    public boolean validToken(String token) {
+        if (StringUtils.isNotEmpty(token)) {
+            try {
+                Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            } catch (SignatureException e) {
+                logger.error("Invalid JWT signature", e);
+            } catch (MalformedJwtException e) {
+                logger.error("Invalid JWT token", e);
+            } catch (ExpiredJwtException e) {
+                logger.error("Expired JWT token", e);
+            } catch (UnsupportedJwtException e) {
+                logger.error("Unsupported JWT token", e);
+            } catch (IllegalArgumentException e) {
+                logger.error("JWT claims string is empty", e);
+            }
+        }
+        return true;
     }
 }

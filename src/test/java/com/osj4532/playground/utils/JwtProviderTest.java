@@ -1,7 +1,7 @@
 package com.osj4532.playground.utils;
 
-import com.osj4532.playground.domain.entity.UserMst;
-import com.osj4532.playground.domain.repo.UserRepo;
+import com.osj4532.playground.dto.UserMstDto;
+import com.osj4532.playground.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,12 +16,12 @@ public class JwtProviderTest {
     private JwtProvider jwtProvider;
 
     @Autowired
-    private UserRepo repo;
+    private UserService service;
 
     @Test
-    void createToken() throws Exception {
+    void createToken() {
 
-        UserMst user = repo.findById("USR0001").orElseThrow(Exception::new);
+        UserMstDto user = service.getUserOne("USER0001");
 
         String token = jwtProvider.createToken(user);
         System.out.println(token);
@@ -31,8 +31,8 @@ public class JwtProviderTest {
     }
 
     @Test
-    void getTokenData() throws Exception {
-        UserMst user = repo.findById("USR0001").orElseThrow(Exception::new);
+    void getTokenData() {
+        UserMstDto user = service.getUserOne("USER0001");
         String token = jwtProvider.createToken(user);
 
         Map<String, Object> tokenData = jwtProvider.getTokenData(token);
@@ -41,11 +41,11 @@ public class JwtProviderTest {
     }
 
     @Test
-    void isTokenExpired() throws Exception {
-        UserMst user = repo.findById("USR0001").orElseThrow(Exception::new);
+    void isTokenExpired() {
+        UserMstDto user = service.getUserOne("USER0001");
         String token = jwtProvider.createToken(user);
 
-        boolean isExpired = jwtProvider.isTokenExpired(token);
+        boolean isExpired = jwtProvider.validToken(token);
         System.out.println(isExpired);
         assertThat(isExpired).isFalse();
     }

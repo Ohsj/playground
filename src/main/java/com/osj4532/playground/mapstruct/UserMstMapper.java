@@ -4,6 +4,6 @@ import com.osj4532.playground.domain.entity.UserMst;
 import com.osj4532.playground.dto.UserMstDto;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface UserMstMapper extends ObjectMapper<UserMstDto, UserMst>{
 }
