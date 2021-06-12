@@ -2,6 +2,7 @@ package com.osj4532.playground.aop;
 
 import ch.qos.logback.classic.Logger;
 import com.osj4532.playground.dto.UserMstDto;
+import com.osj4532.playground.error.ForbiddenException;
 import com.osj4532.playground.service.UserService;
 import com.osj4532.playground.utils.JwtProvider;
 import org.apache.commons.lang3.StringUtils;
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.nio.file.AccessDeniedException;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -38,6 +40,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         logger.info("AuthInterceptor Start");
         start = System.currentTimeMillis();         // 시간 측정 용
 
+        // 열려있는 request uri거나 token이 유효하면 통과
         return checkRequestURI(req) || isValidToken(req);
     }
 
@@ -67,7 +70,10 @@ public class AuthInterceptor implements HandlerInterceptor {
             // 토큰 데이터 동일 검사
             isNameMatch = user.getUserName().equals(String.valueOf(tokenData.get("name")));
             isEmailMatch = user.getEmail().equals(String.valueOf(tokenData.get("email")));
+        } else {
+            throw new ForbiddenException("No Token Error");
         }
+
         return isNameMatch && isEmailMatch && isValidToken;
     }
 
