@@ -11,10 +11,17 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 
+/**
+ * 210417 | osj4532 | created
+ * 210612 | osj4532 | exception handler add
+ */
+
 public abstract class BaseController {
     protected final Logger logger = (Logger) LoggerFactory.getLogger(getClass());
 
-
+    /**
+     * 모든 예외를 처리할 핸들러
+     */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionResponse> handleException(HttpServletRequest req, Exception e) {
         LocalDateTime now = LocalDateTime.now();

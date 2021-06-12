@@ -19,7 +19,6 @@ import java.util.Map;
 
 /**
  * API 요청시 권한이 있는지 체크
- * <p>
  * 210523 | osj4532 | created
  */
 @Configuration
