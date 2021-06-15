@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * 토큰이 없을 경우 사용된다.
  */
 
-@ResponseStatus(HttpStatus.FORBIDDEN)
-public class ForbiddenException extends RuntimeException{
+@ResponseStatus(HttpStatus.UNAUTHORIZED)
+public class UnauthorizedException extends RuntimeException{
 
-    public ForbiddenException(String msg) {
+    public UnauthorizedException(String msg) {
         super(msg);
     }
 }

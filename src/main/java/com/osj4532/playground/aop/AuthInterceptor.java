@@ -2,7 +2,7 @@ package com.osj4532.playground.aop;
 
 import ch.qos.logback.classic.Logger;
 import com.osj4532.playground.dto.UserMstDto;
-import com.osj4532.playground.error.ForbiddenException;
+import com.osj4532.playground.error.UnauthorizedException;
 import com.osj4532.playground.service.UserService;
 import com.osj4532.playground.utils.JwtProvider;
 import org.apache.commons.lang3.StringUtils;
@@ -13,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.nio.file.AccessDeniedException;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -54,9 +53,9 @@ public class AuthInterceptor implements HandlerInterceptor {
         String token = req.getHeader("Authorization");
         logger.info("token : " + token);
 
-        boolean isValidToken = false;
-        boolean isNameMatch = false;
-        boolean isEmailMatch = false;
+        boolean isValidToken;
+        boolean isNameMatch;
+        boolean isEmailMatch;
 
         if (StringUtils.isNotEmpty(token)) {
             // 토큰 데이터 추출
@@ -70,7 +69,7 @@ public class AuthInterceptor implements HandlerInterceptor {
             isNameMatch = user.getUserName().equals(String.valueOf(tokenData.get("name")));
             isEmailMatch = user.getEmail().equals(String.valueOf(tokenData.get("email")));
         } else {
-            throw new ForbiddenException("No Token Error");
+            throw new UnauthorizedException("No Token Error");
         }
 
         return isNameMatch && isEmailMatch && isValidToken;

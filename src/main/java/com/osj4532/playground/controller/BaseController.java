@@ -2,7 +2,7 @@ package com.osj4532.playground.controller;
 
 import ch.qos.logback.classic.Logger;
 import com.osj4532.playground.error.ExceptionResponse;
-import com.osj4532.playground.error.ForbiddenException;
+import com.osj4532.playground.error.UnauthorizedException;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +27,7 @@ public abstract class BaseController {
         LocalDateTime now = LocalDateTime.now();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
 
-        if (e instanceof ForbiddenException) {
+        if (e instanceof UnauthorizedException) {
             status = HttpStatus.FORBIDDEN;
         }
 
