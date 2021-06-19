@@ -23,6 +23,8 @@ public class UserMst extends CommonEntity implements Serializable {
     private Date birthDt;
     @Column(name = "email", nullable = false)
     private String email;
+    @Column(name = "passwd", nullable = false)
+    private String passwd;
     @Column(name = "phone_num", nullable = false, length = 11)
     private String phoneNum;
 }

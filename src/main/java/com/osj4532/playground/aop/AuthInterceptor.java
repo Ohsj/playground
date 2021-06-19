@@ -19,6 +19,7 @@ import java.util.Map;
 /**
  * API 요청시 권한이 있는지 체크
  * 210523 | osj4532 | created
+ * 210619 | osj4532 | login 열어주기
  */
 @Configuration
 public class AuthInterceptor implements HandlerInterceptor {
@@ -51,7 +52,6 @@ public class AuthInterceptor implements HandlerInterceptor {
     // 토큰 유효성 체크
     private boolean isValidToken(HttpServletRequest req) {
         String token = req.getHeader("Authorization");
-        logger.info("token : " + token);
 
         boolean isValidToken;
         boolean isNameMatch;
@@ -61,7 +61,7 @@ public class AuthInterceptor implements HandlerInterceptor {
             // 토큰 데이터 추출
             Map<String, Object> tokenData = jwtProvider.getTokenData(token);
             // Id로 유저 조회
-            UserMstDto user = userService.getUserOne(String.valueOf(tokenData.get("id")));
+            UserMstDto user = userService.getUserOneById(String.valueOf(tokenData.get("id")));
 
             // 토큰 유효 검사
             isValidToken = jwtProvider.validToken(token);
@@ -78,7 +78,7 @@ public class AuthInterceptor implements HandlerInterceptor {
     // 토큰 없이 통과 할수 있는 request uri 존재 시 추가하면 token 없이 통과 시키기
     private boolean checkRequestURI(HttpServletRequest req) {
         String reqUri = req.getRequestURI();
-        String[] openUri = {""};
+        String[] openUri = {"/login"};
         return Arrays.asList(openUri).contains(reqUri);
     }
 }

@@ -3,6 +3,7 @@ package com.osj4532.playground.service;
 import com.osj4532.playground.domain.entity.UserMst;
 import com.osj4532.playground.domain.repo.UserRepo;
 import com.osj4532.playground.dto.UserMstDto;
+import com.osj4532.playground.error.UnauthorizedException;
 import com.osj4532.playground.mapstruct.UserMstMapper;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
@@ -29,12 +30,25 @@ public class UserService extends BaseService {
      * @param userId 유저 아이디
      * @return UserMstDto 유저 entity를 유저 dto로 변환한값
      */
-    public UserMstDto getUserOne(String userId) {
+    public UserMstDto getUserOneById(String userId) {
         Optional<UserMst> user = userRepo.findById(userId);
         if (!user.isPresent()) {
-            throw new NoSuchElementException();
+            throw new NoSuchElementException("Not exist userId");
         }
 
+        return userMapper.toDto(user.get());
+    }
+
+    /**
+     * 유저 이메일로 유저 정보 단건 조회
+     * @param email 유저 이메일
+     * @return UserMstDto 유저 entity를 유저 dto로 변환한값
+     */
+    public UserMstDto getUserOneByEmail(String email) {
+        Optional<UserMst> user = userRepo.findByEmail(email);
+        if (!user.isPresent()) {
+            throw new NoSuchElementException("Not exist email");
+        }
         return userMapper.toDto(user.get());
     }
 }

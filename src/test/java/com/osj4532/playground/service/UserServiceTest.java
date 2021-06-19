@@ -39,7 +39,7 @@ public class UserServiceTest extends BaseTestService{
         given(repo.findById(fakeId)).willReturn(Optional.of(userEntity));
 
         // when
-        UserMstDto user = service.getUserOne(userEntity.getUserId());
+        UserMstDto user = service.getUserOneById(userEntity.getUserId());
 
         // then
         assertThat(user).isNotNull();

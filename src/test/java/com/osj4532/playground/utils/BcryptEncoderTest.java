@@ -14,7 +14,7 @@ public class BcryptEncoderTest {
 
     @Test
     void encoderTest() {
-        String password = "qweqweqwe";
+        String password = "rkskek12";
         String result = encoder.encode(password);
 
         boolean isMatch = encoder.matches(password, result);

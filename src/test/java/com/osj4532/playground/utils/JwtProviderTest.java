@@ -21,7 +21,7 @@ public class JwtProviderTest {
     @Test
     void createToken() {
 
-        UserMstDto user = service.getUserOne("USER0001");
+        UserMstDto user = service.getUserOneById("USER0001");
 
         String token = jwtProvider.createToken(user);
         System.out.println(token);
@@ -32,7 +32,7 @@ public class JwtProviderTest {
 
     @Test
     void getTokenData() {
-        UserMstDto user = service.getUserOne("USER0001");
+        UserMstDto user = service.getUserOneById("USER0001");
         String token = jwtProvider.createToken(user);
 
         Map<String, Object> tokenData = jwtProvider.getTokenData(token);
@@ -42,7 +42,7 @@ public class JwtProviderTest {
 
     @Test
     void isTokenExpired() {
-        UserMstDto user = service.getUserOne("USER0001");
+        UserMstDto user = service.getUserOneById("USER0001");
         String token = jwtProvider.createToken(user);
 
         boolean isExpired = jwtProvider.validToken(token);
