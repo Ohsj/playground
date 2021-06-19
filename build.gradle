@@ -23,6 +23,7 @@ dependencies {
 
     // spring
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
 
     // Mapstruct (lombok과 같이 사용할 경우 무조건 lombok보다 일찍 선언해야한다.)
     implementation 'org.mapstruct:mapstruct:1.4.1.Final'
