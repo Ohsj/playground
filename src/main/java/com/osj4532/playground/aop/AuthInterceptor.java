@@ -78,7 +78,12 @@ public class AuthInterceptor implements HandlerInterceptor {
     // 토큰 없이 통과 할수 있는 request uri 존재 시 추가하면 token 없이 통과 시키기
     private boolean checkRequestURI(HttpServletRequest req) {
         String reqUri = req.getRequestURI();
-        String[] openUri = {"/login"};
+        // static resource일 경우 모든 자원에는 .이있다고 가정한다. Ex(.html, .ico ...)
+        if (reqUri.contains(".")) {
+            return true;
+        }
+        String[] openUri = {"/login", "/error", "/swagger", "/api-docs"};
+
         return Arrays.asList(openUri).contains(reqUri);
     }
 }

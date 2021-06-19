@@ -24,6 +24,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // csrf token 미사용 설정
-        http.csrf().disable();
+        http.csrf().disable()
+        .authorizeRequests()
+        // 모든 요청을 허용하며 interceptor에서 걸러준다.
+        .anyRequest().permitAll();
     }
 }
