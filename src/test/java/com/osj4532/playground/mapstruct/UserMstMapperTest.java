@@ -47,7 +47,7 @@ public class UserMstMapperTest {
         UserMst user = mapper.toEntity(dto);
 
         assertThat(user).isNotNull();
-        assertThat(user.getUserName()).isEqualTo("test");
+        assertThat(user.getUsername()).isEqualTo("test");
         assertThat(user.getEmail()).isEqualTo("test@test");
         assertThat(user.getPhoneNum()).isEqualTo("01011111111");
         assertThat(user.getBirthDt()).isEqualTo(now);

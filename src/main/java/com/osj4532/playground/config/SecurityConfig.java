@@ -1,32 +1,51 @@
 package com.osj4532.playground.config;
 
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import com.osj4532.playground.aop.JwtAuthenticationFilter;
+import com.osj4532.playground.utils.JwtTokenProvider;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-
-/**
- * 210619 | osj4532 | created
- */
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final JwtTokenProvider jwtTokenProvider;
+
+    public SecurityConfig(JwtTokenProvider jwtTokenProvider) {
+        this.jwtTokenProvider = jwtTokenProvider;
+    }
+
+    @Bean
     @Override
-    public void configure(WebSecurity web) {
-        // 정적 자원에 대해서는 security 설정을 적용하지 않음.
-        web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // csrf token 미사용 설정
-        http.csrf().disable()
-        .authorizeRequests()
-        // 모든 요청을 허용하며 interceptor에서 걸러준다.
-        .anyRequest().permitAll();
+        http
+                .httpBasic().disable()  // rest api만
+                .csrf().disable();      // csrf 해제
+
+        http
+                .authorizeRequests() // 요청에 대한 사용권한 체크
+                    .antMatchers("/login/**").anonymous()
+                    .anyRequest().authenticated()
+                .and()
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
+                        UsernamePasswordAuthenticationFilter.class);
     }
 }

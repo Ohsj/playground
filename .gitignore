@@ -1,7 +1,7 @@
 ### Server Log Dir ###
 log/*
 
-
+src/test/java/com/osj4532/playground/test
 
 .gradle
 build/

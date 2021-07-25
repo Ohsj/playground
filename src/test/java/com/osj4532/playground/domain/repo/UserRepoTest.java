@@ -26,7 +26,7 @@ public class UserRepoTest {
         UserMst user = repo.findById("USR0001").orElse(new UserMst());
 
         // then
-        assertThat(user.getUserName()).isEqualTo("오승주");
+        assertThat(user.getUsername()).isEqualTo("오승주");
 
         System.out.println(user);
     }

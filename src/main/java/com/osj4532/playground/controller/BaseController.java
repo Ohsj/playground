@@ -2,7 +2,6 @@ package com.osj4532.playground.controller;
 
 import ch.qos.logback.classic.Logger;
 import com.osj4532.playground.error.ExceptionResponse;
-import com.osj4532.playground.error.UnauthorizedException;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,10 +25,6 @@ public abstract class BaseController {
     public ResponseEntity<ExceptionResponse> handleException(HttpServletRequest req, Exception e) {
         LocalDateTime now = LocalDateTime.now();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-
-        if (e instanceof UnauthorizedException) {
-            status = HttpStatus.FORBIDDEN;
-        }
 
         ExceptionResponse res = new ExceptionResponse();
         res.setStatus(status.toString());

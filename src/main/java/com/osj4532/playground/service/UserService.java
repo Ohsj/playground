@@ -2,10 +2,12 @@ package com.osj4532.playground.service;
 
 import com.osj4532.playground.domain.entity.UserMst;
 import com.osj4532.playground.domain.repo.UserRepo;
+import com.osj4532.playground.dto.PostLoginIn;
 import com.osj4532.playground.dto.UserMstDto;
-import com.osj4532.playground.error.UnauthorizedException;
 import com.osj4532.playground.mapstruct.UserMstMapper;
+import com.osj4532.playground.utils.JwtTokenProvider;
 import org.mapstruct.factory.Mappers;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
@@ -19,9 +21,15 @@ import java.util.Optional;
 public class UserService extends BaseService {
 
     private final UserMstMapper userMapper = Mappers.getMapper(UserMstMapper.class);
+    private final JwtTokenProvider jwtTokenProvider;
+    private final PasswordEncoder passwordEncoder;
     private final UserRepo userRepo;
 
-    public UserService(UserRepo userRepo) {
+    public UserService(JwtTokenProvider jwtTokenProvider,
+                       PasswordEncoder passwordEncoder,
+                       UserRepo userRepo) {
+        this.jwtTokenProvider = jwtTokenProvider;
+        this.passwordEncoder = passwordEncoder;
         this.userRepo = userRepo;
     }
 
@@ -50,5 +58,17 @@ public class UserService extends BaseService {
             throw new NoSuchElementException("Not exist email");
         }
         return userMapper.toDto(user.get());
+    }
+
+    /**
+     * 로그인 시 정보가 정확하면 token 발급
+     * @return String jwtToken
+     */
+    public String login(PostLoginIn input) {
+        UserMstDto user = getUserOneByEmail(input.getEmail());
+        if (!passwordEncoder.matches(input.getPasswd(), user.getPasswd())) {
+            throw new IllegalArgumentException("wrong password");
+        }
+        return jwtTokenProvider.createToken(user.getUserId());
     }
 }
