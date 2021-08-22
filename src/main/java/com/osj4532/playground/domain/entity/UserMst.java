@@ -1,8 +1,8 @@
 package com.osj4532.playground.domain.entity;
 
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.GrantedAuthority;
+//import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,7 +15,9 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class UserMst extends CommonEntity implements Serializable, UserDetails {
+public class UserMst extends CommonEntity implements Serializable
+//        , UserDetails
+{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id", length = 7)
@@ -32,38 +34,38 @@ public class UserMst extends CommonEntity implements Serializable, UserDetails {
     private String phoneNum;
 
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @Override
-    public String getPassword() {
-        return passwd;
-    }
-
-    @Override
-    public String getUsername() {
-        return userName;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        return null;
+//    }
+//
+//    @Override
+//    public String getPassword() {
+//        return passwd;
+//    }
+//
+//    @Override
+//    public String getUsername() {
+//        return userName;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonLocked() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isCredentialsNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isEnabled() {
+//        return true;
+//    }
 }
